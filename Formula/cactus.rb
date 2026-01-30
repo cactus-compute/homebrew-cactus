@@ -1,12 +1,12 @@
 class Cactus < Formula
   desc "Energy-efficient AI inference engine for consumer devices"
   homepage "https://github.com/cactus-compute/cactus"
-  url "https://github.com/cactus-compute/cactus/archive/refs/tags/v1.6.tar.gz"
+  url "https://github.com/cactus-compute/cactus/archive/refs/tags/v1.6-dev.tar.gz"
   sha256 "ce02a8d8b9d86636ef8a42e2355ca2deb3bf37a07b0e23063d9ee4a24ed4526e"
   license "Apache-2.0"
 
   depends_on "cmake"
-  depends_on "python@3.12"
+  depends_on "python@3.14"
 
   def install
     # Install entire repo structure to libexec (replicates git clone)
@@ -43,7 +43,7 @@ class Cactus < Formula
 
     # Create virtual environment
     venv_dir = libexec/"venv"
-    system "python3.12", "-m", "venv", venv_dir
+    system "python3.14", "-m", "venv", venv_dir
 
     # Install dependencies
     pip = venv_dir/"bin/pip"
