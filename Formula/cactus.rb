@@ -48,7 +48,7 @@ class Cactus < Formula
     # Install dependencies
     pip = venv_dir/"bin/pip"
     system pip, "install", "--upgrade", "pip"
-    system pip, "install", "-r", libexec/"python/requirements.txt"
+    system pip, "install", "--no-cache-dir", "-r", libexec/"python/requirements.txt"
 
     # Install cactus package
     system pip, "install", "-e", libexec/"python"
