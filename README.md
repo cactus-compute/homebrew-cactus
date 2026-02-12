@@ -35,22 +35,28 @@ For the full list see the [Cactus README](https://github.com/cactus-compute/cact
 
 ## Releasing a New Version
 
-### 1. Create a dev tag on the cactus repo
+Releases are automated via GitHub Actions in the [cactus repo](https://github.com/cactus-compute/cactus).
+The workflow runs weekly (Mondays) and can also be triggered manually. It auto-increments the version tag (v1.7, v1.8, ...), creates a GitHub release, and updates this formula automatically.
+
+### Manual release (from the cactus repo)
+
+Go to **Actions → Release & Update Homebrew → Run workflow**. Optionally specify a version tag, or leave blank to auto-increment.
+
+### Manual formula update (without the workflow)
 
 ```bash
+# 1. Tag the cactus repo
 cd /path/to/cactus
-git tag v1.7-dev
-git push origin v1.7-dev
-```
+git tag v1.8
+git push origin v1.8
 
-### 2. Update the formula
-
-```bash
-curl -sL https://github.com/cactus-compute/cactus/archive/refs/tags/v1.7-dev.tar.gz | shasum -a 256
+# 2. Get SHA256 and update the formula
+curl -sL https://github.com/cactus-compute/cactus/archive/refs/tags/v1.8.tar.gz | shasum -a 256
 
 # Edit Formula/cactus.rb — update the url and sha256 fields
 
-git add . && git commit -m "Update cactus" && git push origin main
+cd /path/to/homebrew-cactus
+git add . && git commit -m "Update cactus to v1.8" && git push origin main
 ```
 
 ## Uninstalling
