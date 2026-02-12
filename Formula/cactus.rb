@@ -8,6 +8,7 @@ class Cactus < Formula
   depends_on "cmake" => :build
   depends_on :macos
   depends_on "python@3.14"
+  depends_on "sdl2"
 
   def install
     # Install only the directories needed for build and runtime.
@@ -47,8 +48,11 @@ class Cactus < Formula
            libexec/"tests/chat.cpp", *link_flags,
            "-o", tests_build/"chat"
 
+    sdl2_prefix = Formula["sdl2"].opt_prefix
     system ENV.cxx, *compile_flags,
+           "-DHAVE_SDL2", "-I#{sdl2_prefix}/include",
            libexec/"tests/asr.cpp", *link_flags,
+           "-L#{sdl2_prefix}/lib", "-lSDL2",
            "-o", tests_build/"asr"
 
     # Set up Python virtual environment with CLI dependencies

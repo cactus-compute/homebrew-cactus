@@ -50,7 +50,6 @@ curl -sL https://github.com/cactus-compute/cactus/archive/refs/tags/v1.7-dev.tar
 
 # Edit Formula/cactus.rb — update the url and sha256 fields
 
-cd /path/to/homebrew-cactus
 git add . && git commit -m "Update cactus" && git push origin main
 ```
 
