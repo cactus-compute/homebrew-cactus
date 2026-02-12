@@ -5,8 +5,7 @@
 ## Install
 
 ```bash
-brew tap cactus-compute/cactus
-brew install cactus
+brew install cactus-compute/cactus/cactus
 ```
 
 ## Usage
@@ -47,3 +46,7 @@ curl -sL https://github.com/cactus-compute/cactus/archive/refs/tags/<TAG>.tar.gz
 # 3. Push
 git add . && git commit -m "Update cactus" && git push origin main
 ```
+
+## Uninstalling
+
+`brew uninstall cactus && brew untap cactus-compute/cactus`

@@ -19,7 +19,13 @@ class Cactus < Formula
     (libexec/"weights").mkpath
 
     # Build the native library (libcactus.a + libcactus.dylib)
-    system "bash", libexec/"cactus/build.sh"
+    cactus_build = libexec/"cactus/build"
+    cactus_build.mkpath
+    cd cactus_build do
+      system "cmake", "..", *std_cmake_args,
+             "-DCMAKE_BUILD_TYPE=Release"
+      system "make", "-j#{ENV.make_jobs}"
+    end
 
     # Compile the chat and asr binaries used by `cactus run` and `cactus transcribe`
     tests_build = libexec/"tests/build"
@@ -30,7 +36,7 @@ class Cactus < Formula
       "-I#{libexec}",
     ]
     link_flags = [
-      libexec/"cactus/build/libcactus.a",
+      cactus_build/"libcactus.a",
       "-lcurl",
       "-framework", "Accelerate",
       "-framework", "CoreML",
