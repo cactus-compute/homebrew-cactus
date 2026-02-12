@@ -11,11 +11,9 @@ brew install cactus-compute/cactus/cactus
 ## Usage
 
 ```bash
-# Download a model and start chatting
 cactus download LiquidAI/LFM2-1.2B
 cactus run LiquidAI/LFM2-1.2B
 
-# Transcription
 cactus download UsefulSensors/moonshine-base
 cactus transcribe                      # Live microphone
 cactus transcribe --file audio.wav     # From file
@@ -35,15 +33,24 @@ cactus --help
 
 For the full list see the [Cactus README](https://github.com/cactus-compute/cactus#supported-models).
 
-## Updating the Formula
+## Releasing a New Version
+
+### 1. Create a dev tag on the cactus repo
 
 ```bash
-# 1. Get SHA256 for the new release tag
-curl -sL https://github.com/cactus-compute/cactus/archive/refs/tags/<TAG>.tar.gz | shasum -a 256
+cd /path/to/cactus
+git tag v1.7-dev
+git push origin v1.7-dev
+```
 
-# 2. Update Formula/cactus.rb with the new URL and SHA256
+### 2. Update the formula
 
-# 3. Push
+```bash
+curl -sL https://github.com/cactus-compute/cactus/archive/refs/tags/v1.7-dev.tar.gz | shasum -a 256
+
+# Edit Formula/cactus.rb — update the url and sha256 fields
+
+cd /path/to/homebrew-cactus
 git add . && git commit -m "Update cactus" && git push origin main
 ```
 

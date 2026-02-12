@@ -1,8 +1,8 @@
 class Cactus < Formula
   desc "Energy-efficient AI inference engine for consumer devices"
   homepage "https://github.com/cactus-compute/cactus"
-  url "https://github.com/cactus-compute/cactus/archive/refs/tags/v1.6.tar.gz"
-  sha256 "7e988517ab4957c0d58128566653e875f03304830ef7866042264823dce2225f"
+  url "https://github.com/cactus-compute/cactus/archive/refs/tags/v1.7-dev.tar.gz"
+  sha256 "ab85c8438bd3e21048249d726a3a561a30fca93abf1d9de28398610e912236dc"
   license "Apache-2.0"
 
   depends_on "cmake" => :build
