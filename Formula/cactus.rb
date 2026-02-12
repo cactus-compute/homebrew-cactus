@@ -57,11 +57,17 @@ class Cactus < Formula
 
     pip = venv_dir/"bin/pip"
     system pip, "install", "--upgrade", "pip"
-    system pip, "install", "--no-cache-dir", "-r", libexec/"python/requirements.txt"
+
+    # Install only the dependencies needed for CLI usage (download, run, transcribe).
+    # We skip requirements.txt because it includes torchvision and other VLM-only
+    # packages that are incompatible with Python 3.14.
+    system pip, "install", "--no-cache-dir",
+           "torch>=2.8.0", "transformers>=4.57.0", "numpy",
+           "huggingface-hub==0.36.0", "peft>=0.15.0", "einops>=0.8.1"
 
     # Editable install is required: the CLI resolves native library and
     # binary paths relative to the source tree (python/src/ -> ../../cactus/build/).
-    system pip, "install", "-e", libexec/"python"
+    system pip, "install", "--no-deps", "-e", libexec/"python"
 
     (bin/"cactus").write <<~EOS
       #!/bin/bash
