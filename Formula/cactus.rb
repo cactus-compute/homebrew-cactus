@@ -81,88 +81,78 @@ class Cactus < Formula
   def caveats
     <<~EOS
 
-      -----------------------------------------------------------------
+         ██████╗ █████╗  ██████╗████████╗██╗   ██╗███████╗
+        ██╔════╝██╔══██╗██╔════╝╚══██╔══╝██║   ██║██╔════╝
+        ██║     ███████║██║        ██║   ██║   ██║███████╗
+        ██║     ██╔══██║██║        ██║   ██║   ██║╚════██║
+        ╚██████╗██║  ██║╚██████╗   ██║   ╚██████╔╝███████║
+         ╚═════╝╚═╝  ╚═╝ ╚═════╝   ╚═╝    ╚═════╝ ╚══════╝
 
-      How to use the Cactus Repo/CLI:
+        ...Low-Latency AI Inference for Consumer Devices...
 
-      -----------------------------------------------------------------
+        Website: https://cactuscompute.com 
+        GitHub: https://github.com/cactus-compute/cactus
 
-      cactus auth                          manage Cactus Cloud API key
-                                           shows status and prompts to set key
+      ┌─────────────────────────────────────────────────────────────────────┐
+      │  QUICK START                                                        │
+      ├─────────────────────────────────────────────────────────────────────┤
+      │                                                                     │
+      │  cactus run                    default: LiquidAI/LFM2-1.2B          │
+      │                                                                     │
+      │  cactus transcribe             default: openai/whisper-small        │
+      │  cactus transcribe --file audio.wav                                 │
+      │                                                                     │
+      ├─────────────────────────────────────────────────────────────────────┤
+      │  COMMANDS                                                           │
+      ├─────────────────────────────────────────────────────────────────────┤
+      │                                                                     │
+      │  cactus auth                      manage Cloud API key              │
+      │    --status                       show key status without prompting │
+      │    --clear                        remove the saved API key          │
+      │                                                                     │
+      │  cactus run <model>               chat with a model                 │
+      │    --precision INT4|INT8|FP16     quantization (default: INT8)      │
+      │    --token <token>                HF token (for gated models)       │
+      │    --reconvert                    force re-conversion from source   │
+      │                                                                     │
+      │  cactus transcribe [model]        live speech-to-text               │
+      │    --file <audio.wav>             transcribe from file instead      │
+      │    --precision INT4|INT8|FP16     quantization (default: INT8)      │
+      │    --token <token>                HF token (for gated models)       │
+      │    --reconvert                    force re-conversion from source   │
+      │                                                                     │
+      │  cactus download <model>          download model weights            │
+      │    --precision INT4|INT8|FP16     quantization (default: INT8)      │
+      │    --token <token>                HuggingFace API token             │
+      │    --reconvert                    force re-conversion from source   │
+      │                                                                     │
+      │  cactus convert <model> [dir]     convert to custom directory       │
+      │    --precision INT4|INT8|FP16     quantization (default: INT8)      │
+      │    --lora <path>                  LoRA adapter path to merge        │
+      │    --token <token>                HuggingFace API token             │
+      │                                                                     │
+      │  cactus build                     build for ARM chips               │
+      │    --apple                        build for Apple (iOS/macOS)       │
+      │    --android                      build for Android                 │
+      │    --flutter                      build for Flutter (all platforms) │
+      │    --python                       build shared lib for Python FFI   │
+      │                                                                     │
+      │  cactus test                      run unit tests and benchmarks     │
+      │    --model <model>                default: LFM2-VL-450M             │
+      │    --transcribe_model <model>     default: openai/whisper-small     │
+      │    --large                        use larger models for testing     │
+      │    --only <test_name>             run a specific test               │
+      │    --no-rebuild                   skip building library and tests   │
+      │    --ios                          run on connected iPhone           │
+      │    --android                      run on connected Android          │
+      │                                                                     │
+      │  cactus clean                     remove all build artifacts        │
+      │  cactus --help                    show full command reference       │
+      │                                                                     │
+      └─────────────────────────────────────────────────────────────────────┘
 
-        Optional flags:
-        --status                           show key status without prompting
-        --clear                            remove the saved API key
+      Model weights: #{libexec}/weights
 
-      -----------------------------------------------------------------
-
-      cactus run <model>                   opens playground for the model
-                                           auto downloads and spins up
-
-        Optional flags:
-        --precision INT4|INT8|FP16         default: INT8
-        --token <token>                    HF token (for gated models)
-        --reconvert                        force model weights reconversion from source
-
-      -----------------------------------------------------------------
-
-      cactus transcribe [model]            live microphone transcription
-                                           default model: whisper-small
-
-        Optional flags:
-        --file <audio.wav>                 transcribe audio file instead of mic
-        --precision INT4|INT8|FP16         default: INT8
-        --token <token>                    HF token (for gated models)
-        --reconvert                        force model weights reconversion from source
-
-        Examples:
-        cactus transcribe                  live microphone transcription
-        cactus transcribe --file audio.wav transcribe single file
-        cactus transcribe openai/whisper-small   use different model
-        cactus transcribe openai/whisper-small --file audio.wav
-
-      -----------------------------------------------------------------
-
-      cactus download <model>              downloads model to ./weights
-                                           see supported weights on ReadMe
-
-        Optional flags:
-        --precision INT4|INT8|FP16         quantization (default: INT8)
-        --token <token>                    HuggingFace API token
-        --reconvert                        force model weights reconversion from source
-
-      -----------------------------------------------------------------
-
-      cactus convert <model> [output_dir]  converts model to custom directory
-                                           supports LoRA adapter merging
-
-        Optional flags:
-        --precision INT4|INT8|FP16         quantization (default: INT8)
-        --lora <path>                      LoRA adapter path to merge
-        --token <token>                    HuggingFace API token
-
-      -----------------------------------------------------------------
-
-      cactus build                         builds cactus for ARM chips
-                                           output: build/libcactus.a
-
-        Optional flags:
-        --apple                            build for Apple (iOS/macOS)
-        --android                          build for Android
-        --flutter                          build for Flutter (all platforms)
-        --python                           build shared lib for Python FFI
-
-      -----------------------------------------------------------------
-
-      cactus clean                         removes all build artifacts
-
-      -----------------------------------------------------------------
-
-      cactus --help                        shows these instructions
-
-      -----------------------------------------------------------------
-
-      Model weights are stored in: #{libexec}/weights
     EOS
   end
 
