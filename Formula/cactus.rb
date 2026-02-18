@@ -10,15 +10,11 @@ class Cactus < Formula
   depends_on "sdl2" => :recommended
 
   def install
-    # Install only the directories needed for build and runtime.
-    # The Python CLI resolves native library and binary paths relative
-    # to the source tree, so the repo layout must be preserved.
     %w[cactus python tests libs].each do |dir|
       (libexec/dir).install Dir["#{dir}/*"] if File.directory?(dir)
     end
     (libexec/"weights").mkpath
 
-    # Build the native library (libcactus.a + libcactus.dylib)
     cactus_build = libexec/"cactus/build"
     cactus_build.mkpath
     cd cactus_build do
@@ -26,7 +22,6 @@ class Cactus < Formula
       system "make", "-j#{ENV.make_jobs}"
     end
 
-    # Compile the chat and asr binaries used by `cactus run` and `cactus transcribe`
     tests_build = libexec/"tests/build"
     tests_build.mkpath
 
@@ -64,22 +59,16 @@ class Cactus < Formula
              "-o", tests_build/"asr"
     end
 
-    # Set up Python virtual environment with CLI dependencies
     venv_dir = libexec/"venv"
     system "python3.14", "-m", "venv", venv_dir
 
     pip = venv_dir/"bin/pip"
     system pip, "install", "--upgrade", "pip"
 
-    # Install only the dependencies needed for CLI usage (download, run, transcribe).
-    # We skip requirements.txt because it includes torchvision and other VLM-only
-    # packages that are not needed for basic CLI workflows.
     system pip, "install", "--no-cache-dir",
            "torch>=2.8.0", "transformers>=4.57.0", "numpy",
            "huggingface-hub>=0.36.0"
 
-    # Editable install is required: the CLI resolves native library and
-    # binary paths relative to the source tree (python/src/ -> ../../cactus/build/).
     system pip, "install", "--no-deps", "-e", libexec/"python"
 
     (bin/"cactus").write <<~EOS
@@ -89,23 +78,26 @@ class Cactus < Formula
     EOS
   end
 
-  def post_install
-    system "#{bin}/cactus", "--help"
-  end
-
   def caveats
     <<~EOS
+
+      cactus auth                          manage Cactus Cloud API key
+      cactus run <model>                   opens playground for the model
+      cactus transcribe [model]            live microphone transcription
+      cactus download <model>              downloads model to ./weights
+      cactus convert <model> [output_dir]  converts model to custom directory
+      cactus build                         builds cactus for ARM chips
+
       Quick start:
         cactus download LiquidAI/LFM2-1.2B
         cactus run LiquidAI/LFM2-1.2B
 
       Transcription:
-        cactus download openai/whisper-small
         cactus transcribe
         cactus transcribe --file audio.wav
 
       Model weights are stored in: #{libexec}/weights
-      For all commands: cactus --help
+      cactus --help                        shows all commands and options
     EOS
   end
 
