@@ -91,11 +91,8 @@ class Cactus < Formula
         ...Low-Latency AI Inference for Consumer Devices...
 
         Website: https://cactuscompute.com 
-
         GitHub: https://github.com/cactus-compute/cactus
-
         HuggingFace: https://huggingface.co/Cactus-Compute
-
         Join The Reddit Community: https://www.reddit.com/r/cactuscompute/ 
 
       ┌─────────────────────────────────────────────────────────────────────┐
