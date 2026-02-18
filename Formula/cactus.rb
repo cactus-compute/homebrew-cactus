@@ -94,6 +94,10 @@ class Cactus < Formula
 
         GitHub: https://github.com/cactus-compute/cactus
 
+        HuggingFace: https://huggingface.co/Cactus-Compute
+
+        Join The Reddit Community: https://www.reddit.com/r/cactuscompute/ 
+
       ┌─────────────────────────────────────────────────────────────────────┐
       │  QUICK START                                                        │
       ├─────────────────────────────────────────────────────────────────────┤
