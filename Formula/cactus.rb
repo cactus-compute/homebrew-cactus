@@ -6,7 +6,7 @@ class Cactus < Formula
 
   depends_on "cmake" => :build
   depends_on :macos
-  depends_on "python@3.12"
+  depends_on "python@3.14"
   depends_on "sdl2" => :recommended
 
   def install
@@ -66,7 +66,7 @@ class Cactus < Formula
 
     # Set up Python virtual environment with CLI dependencies
     venv_dir = libexec/"venv"
-    system "python3.12", "-m", "venv", venv_dir
+    system "python3.14", "-m", "venv", venv_dir
 
     pip = venv_dir/"bin/pip"
     system pip, "install", "--upgrade", "pip"
