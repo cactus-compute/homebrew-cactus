@@ -76,7 +76,7 @@ class Cactus < Formula
     # packages that are not needed for basic CLI workflows.
     system pip, "install", "--no-cache-dir",
            "torch>=2.8.0", "transformers>=4.57.0", "numpy",
-           "huggingface-hub>=0.36.0", "silero-vad>=6.2.0",
+           "huggingface-hub>=0.36.0", "silero-vad>=6.2.0"
 
     # Editable install is required: the CLI resolves native library and
     # binary paths relative to the source tree (python/src/ -> ../../cactus/build/).
