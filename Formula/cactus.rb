@@ -91,6 +91,7 @@ class Cactus < Formula
         ...Low-Latency AI Inference for Consumer Devices...
 
         Website: https://cactuscompute.com 
+
         GitHub: https://github.com/cactus-compute/cactus
 
       ┌─────────────────────────────────────────────────────────────────────┐
@@ -98,15 +99,13 @@ class Cactus < Formula
       ├─────────────────────────────────────────────────────────────────────┤
       │                                                                     │
       │  cactus run                    default: LiquidAI/LFM2-1.2B          │
-      │                                                                     │
       │  cactus transcribe             default: openai/whisper-small        │
-      │  cactus transcribe --file audio.wav                                 │
       │                                                                     │
       ├─────────────────────────────────────────────────────────────────────┤
       │  COMMANDS                                                           │
       ├─────────────────────────────────────────────────────────────────────┤
       │                                                                     │
-      │  cactus auth                      manage Cloud API key              │
+      │  cactus auth                      (optional) manage Cloud API key   │
       │    --status                       show key status without prompting │
       │    --clear                        remove the saved API key          │
       │                                                                     │
@@ -148,6 +147,35 @@ class Cactus < Formula
       │                                                                     │
       │  cactus clean                     remove all build artifacts        │
       │  cactus --help                    show full command reference       │
+      │                                                                     │
+      ├─────────────────────────────────────────────────────────────────────┤
+      │  SUPPORTED MODELS                                                   │
+      ├─────────────────────────────────────────────────────────────────────┤
+      │                                                                     │
+      │  Chat                                                               │
+      │    google/gemma-3-270m-it              completion                   │
+      │    google/functiongemma-270m-it        completion, tools            │
+      │    LiquidAI/LFM2-350M                  completion, tools, embed     │
+      │    Qwen/Qwen3-0.6B                     completion, tools, embed     │
+      │    LiquidAI/LFM2-700M                  completion, tools, embed     │
+      │    google/gemma-3-1b-it                completion                   │
+      │    LiquidAI/LFM2.5-1.2B-Thinking       completion, tools, embed     │
+      │    LiquidAI/LFM2.5-1.2B-Instruct       completion, tools, embed     │
+      │    Qwen/Qwen3-1.7B                     completion, tools, embed     │
+      │    LiquidAI/LFM2-2.6B                  completion, tools, embed     │
+      │                                                                     │
+      │  Vision                                                             │
+      │    LiquidAI/LFM2-VL-450M               vision, embed, Apple NPU     │
+      │    LiquidAI/LFM2.5-VL-1.6B             vision, embed, Apple NPU     │
+      │                                                                     │
+      │  Speech                                                             │
+      │    UsefulSensors/moonshine-base        transcription, embed         │
+      │    openai/whisper-small                transcription, Apple NPU     │
+      │    openai/whisper-medium               transcription, Apple NPU     │
+      │                                                                     │
+      │  Embedding                                                          │
+      │    nomic-ai/nomic-embed-text-v2-moe    text embedding               │
+      │    Qwen/Qwen3-Embedding-0.6B           text embedding               │
       │                                                                     │
       └─────────────────────────────────────────────────────────────────────┘
 
