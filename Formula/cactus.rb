@@ -2,7 +2,7 @@ class Cactus < Formula
   desc "Low-latency AI inference engine for consumer devices"
   homepage "https://github.com/cactus-compute/cactus"
   url "https://github.com/cactus-compute/cactus/archive/refs/tags/v1.7-dev.tar.gz"
-  sha256 "52b33c86cd1336f04f7f5a41dc6d4b6e230e5a621bceb6790e4dbbb3fade70aa"
+  sha256 "48943f93cfe69c8d728a2f20ee6c28a2d07cf2f27e2d333ade8eafe46bcb466f"
 
   depends_on "cmake" => :build
   depends_on :macos
