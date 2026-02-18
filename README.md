@@ -47,8 +47,8 @@ Go to **Actions → Release & Update Homebrew → Run workflow**. Optionally spe
 ```bash
 # 1. Tag the cactus repo
 cd /path/to/cactus
-git tag v1.7-dev
-git push origin v1.7-dev
+git tag dev
+git push origin dev
 
 # 2. Get SHA256 and update the formula
 curl -sL https://github.com/cactus-compute/cactus/archive/refs/tags/v1.7-dev.tar.gz | shasum -a 256
