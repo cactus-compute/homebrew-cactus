@@ -7,7 +7,7 @@ class Cactus < Formula
   depends_on "cmake" => :build
   depends_on :macos
   depends_on "python@3.12"
-  depends_on "sdl2"
+  depends_on "sdl2" => :recommended
 
   def install
     # Install only the directories needed for build and runtime.
@@ -22,8 +22,7 @@ class Cactus < Formula
     cactus_build = libexec/"cactus/build"
     cactus_build.mkpath
     cd cactus_build do
-      system "cmake", "..", *std_cmake_args,
-             "-DCMAKE_BUILD_TYPE=Release"
+      system "cmake", "..", *std_cmake_args
       system "make", "-j#{ENV.make_jobs}"
     end
 
@@ -31,28 +30,39 @@ class Cactus < Formula
     tests_build = libexec/"tests/build"
     tests_build.mkpath
 
+    vendored_curl = libexec/"libs/curl/macos/libcurl.a"
+
     compile_flags = [
       "-std=c++20", "-O3",
       "-I#{libexec}",
     ]
     link_flags = [
       cactus_build/"libcactus.a",
-      "-lcurl",
+      vendored_curl.to_s,
       "-framework", "Accelerate",
       "-framework", "CoreML",
       "-framework", "Foundation",
+      "-framework", "Security",
+      "-framework", "SystemConfiguration",
+      "-framework", "CFNetwork",
     ]
 
     system ENV.cxx, *compile_flags,
            libexec/"tests/chat.cpp", *link_flags,
            "-o", tests_build/"chat"
 
-    sdl2_prefix = Formula["sdl2"].opt_prefix
-    system ENV.cxx, *compile_flags,
-           "-DHAVE_SDL2", "-I#{sdl2_prefix}/include",
-           libexec/"tests/asr.cpp", *link_flags,
-           "-L#{sdl2_prefix}/lib", "-lSDL2",
-           "-o", tests_build/"asr"
+    if build.with? "sdl2"
+      sdl2_prefix = Formula["sdl2"].opt_prefix
+      system ENV.cxx, *compile_flags,
+             "-DHAVE_SDL2", "-I#{sdl2_prefix}/include",
+             libexec/"tests/asr.cpp", *link_flags,
+             "-L#{sdl2_prefix}/lib", "-lSDL2",
+             "-o", tests_build/"asr"
+    else
+      system ENV.cxx, *compile_flags,
+             libexec/"tests/asr.cpp", *link_flags,
+             "-o", tests_build/"asr"
+    end
 
     # Set up Python virtual environment with CLI dependencies
     venv_dir = libexec/"venv"
@@ -63,10 +73,10 @@ class Cactus < Formula
 
     # Install only the dependencies needed for CLI usage (download, run, transcribe).
     # We skip requirements.txt because it includes torchvision and other VLM-only
-    # packages that are incompatible with Python 3.14.
+    # packages that are not needed for basic CLI workflows.
     system pip, "install", "--no-cache-dir",
            "torch>=2.8.0", "transformers>=4.57.0", "numpy",
-           "huggingface-hub==0.36.0", "peft>=0.15.0", "einops>=0.8.1", "silero-vad==6.2.0",
+           "huggingface-hub>=0.36.0", "silero-vad>=6.2.0",
 
     # Editable install is required: the CLI resolves native library and
     # binary paths relative to the source tree (python/src/ -> ../../cactus/build/).
@@ -86,7 +96,7 @@ class Cactus < Formula
         cactus run LiquidAI/LFM2-1.2B
 
       Transcription:
-        cactus download UsefulSensors/moonshine-base
+        cactus download openai/whisper-small
         cactus transcribe
         cactus transcribe --file audio.wav
 
