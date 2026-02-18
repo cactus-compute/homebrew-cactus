@@ -1,13 +1,12 @@
 class Cactus < Formula
-  desc "Energy-efficient AI inference engine for consumer devices"
+  desc "Low-latency AI inference engine for consumer devices"
   homepage "https://github.com/cactus-compute/cactus"
-  url "https://github.com/cactus-compute/cactus/archive/refs/tags/v1.7-dev.tar.gz"
-  sha256 "ab85c8438bd3e21048249d726a3a561a30fca93abf1d9de28398610e912236dc"
-  license "Apache-2.0"
+  url "https://github.com/cactus-compute/cactus/archive/refs/tags/v1.7-dev3.tar.gz"
+  sha256 "6f996edc7076150ba88bb6e2226801212324a62723bca69d5ce8dca91b1dd68a"
 
   depends_on "cmake" => :build
   depends_on :macos
-  depends_on "python@3.14"
+  depends_on "python@3.12"
   depends_on "sdl2"
 
   def install
@@ -57,7 +56,7 @@ class Cactus < Formula
 
     # Set up Python virtual environment with CLI dependencies
     venv_dir = libexec/"venv"
-    system "python3.14", "-m", "venv", venv_dir
+    system "python3.12", "-m", "venv", venv_dir
 
     pip = venv_dir/"bin/pip"
     system pip, "install", "--upgrade", "pip"
@@ -67,7 +66,7 @@ class Cactus < Formula
     # packages that are incompatible with Python 3.14.
     system pip, "install", "--no-cache-dir",
            "torch>=2.8.0", "transformers>=4.57.0", "numpy",
-           "huggingface-hub==0.36.0", "peft>=0.15.0", "einops>=0.8.1"
+           "huggingface-hub==0.36.0", "peft>=0.15.0", "einops>=0.8.1", "silero-vad==6.2.0",
 
     # Editable install is required: the CLI resolves native library and
     # binary paths relative to the source tree (python/src/ -> ../../cactus/build/).

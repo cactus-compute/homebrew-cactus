@@ -47,16 +47,16 @@ Go to **Actions → Release & Update Homebrew → Run workflow**. Optionally spe
 ```bash
 # 1. Tag the cactus repo
 cd /path/to/cactus
-git tag v1.8
-git push origin v1.8
+git tag v1.7-dev2
+git push origin v1.7-dev2
 
 # 2. Get SHA256 and update the formula
-curl -sL https://github.com/cactus-compute/cactus/archive/refs/tags/v1.8.tar.gz | shasum -a 256
+curl -sL https://github.com/cactus-compute/cactus/archive/refs/tags/v1.7-dev2.tar.gz | shasum -a 256
 
 # Edit Formula/cactus.rb — update the url and sha256 fields
 
 cd /path/to/homebrew-cactus
-git add . && git commit -m "Update cactus to v1.8" && git push origin main
+git add . && git commit -m "Update cactus" && git push origin main
 ```
 
 ## Uninstalling
