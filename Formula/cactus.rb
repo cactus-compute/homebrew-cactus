@@ -71,7 +71,7 @@ class Cactus < Formula
 
     system pip, "install", "--no-cache-dir",
            "torch>=2.8.0", "transformers>=4.57.0", "numpy",
-           "huggingface-hub>=0.36.0"
+           "huggingface-hub>=0.36.0", "einops>=0.8.2"
 
     system pip, "install", "--no-deps", "-e", libexec/"python"
 
