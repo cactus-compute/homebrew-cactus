@@ -59,6 +59,10 @@ class Cactus < Formula
              "-o", tests_build/"asr"
     end
 
+    # Install shared library for Python FFI bindings
+    lib.install cactus_build/"libcactus.dylib"
+
+    # ── CLI virtual-environment (heavy deps: torch, transformers, …) ──
     venv_dir = libexec/"venv"
     system "python3.14", "-m", "venv", venv_dir
 
@@ -76,6 +80,15 @@ class Cactus < Formula
       source "#{venv_dir}/bin/activate"
       exec "#{venv_dir}/bin/cactus" "$@"
     EOS
+
+    # ── Python bindings (importable from any Python environment) ──
+    # Copy cactus.py as a standalone module into Homebrew Python's
+    # site-packages so users can: from cactus import cactus_init, ...
+    python3 = "python3.14"
+    xy = Language::Python.major_minor_version python3
+    site_packages = lib/"python#{xy}/site-packages"
+    site_packages.mkpath
+    cp libexec/"python/src/cactus.py", site_packages/"cactus.py"
   end
 
   def caveats
@@ -177,6 +190,22 @@ class Cactus < Formula
       │  Embedding                                                          │
       │    nomic-ai/nomic-embed-text-v2-moe    text embedding               │
       │    Qwen/Qwen3-Embedding-0.6B           text embedding               │
+      │                                                                     │
+      └─────────────────────────────────────────────────────────────────────┘
+
+      ┌─────────────────────────────────────────────────────────────────────┐
+      │  PYTHON BINDINGS                                                    │
+      ├─────────────────────────────────────────────────────────────────────┤
+      │                                                                     │
+      │  The FFI bindings are installed into Homebrew Python's              │
+      │  site-packages. Use from any Python 3.14 script:                   │
+      │                                                                     │
+      │    from cactus import cactus_init, cactus_complete                 │
+      │    model = cactus_init("path/to/weights")                          │
+      │                                                                     │
+      │  For other Python versions, point to the shared library:           │
+      │    export CACTUS_LIB_PATH="#{opt_lib}/libcactus.dylib"            │
+      │    pip install cactus  # or copy cactus.py to your project        │
       │                                                                     │
       └─────────────────────────────────────────────────────────────────────┘
 
