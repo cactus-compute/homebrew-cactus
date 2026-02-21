@@ -70,8 +70,8 @@ class Cactus < Formula
     system pip, "install", "--upgrade", "pip"
 
     system pip, "install", "--no-cache-dir",
-           "torch==2.8.0", "transformers==4.57.0", "numpy==2.4.2",
-           "huggingface-hub==0.36.0", "einops==0.8.2"
+           "torch>=2.8.0", "transformers>=4.57.0", "numpy",
+           "huggingface-hub>=0.36.0"
 
     system pip, "install", "--no-deps", "-e", libexec/"python"
 
