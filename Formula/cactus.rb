@@ -70,8 +70,8 @@ class Cactus < Formula
     system pip, "install", "--upgrade", "pip"
 
     system pip, "install", "--no-cache-dir",
-           "torch==2.8.0",
-           "torchvision==0.23.0",
+           "torch>=2.8.0",
+           "torchvision>=0.23.0",
            "transformers==5.0.0",
            "pillow==11.3.0",
            "num2words==0.5.12",
