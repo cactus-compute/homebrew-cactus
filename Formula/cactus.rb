@@ -10,6 +10,9 @@ class Cactus < Formula
   depends_on "sdl2" => :recommended
 
   def install
+    # Preserve -march flags through superenv so CMake can pass
+    # -march=armv9.2-a+nosve+nosve2+sme2 to the SME2 kernel build.
+    ENV.runtime_cpu_detection
     %w[cactus python tests libs].each do |dir|
       (libexec/dir).install Dir["#{dir}/*"] if File.directory?(dir)
     end
