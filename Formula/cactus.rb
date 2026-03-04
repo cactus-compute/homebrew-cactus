@@ -181,7 +181,11 @@ class Cactus < Formula
       │    LiquidAI/LFM2-350M                  completion, tools, embed     │
       │    Qwen/Qwen3-0.6B                     completion, tools, embed     │
       │    LiquidAI/LFM2-700M                  completion, tools, embed     │
+      │    LiquidAI/LFM2-8B-A1B                completion, tools, embed     │
       │    google/gemma-3-1b-it                completion                   │
+      │    LiquidAI/LFM2-1.2B                  completion, tools, embed     │
+      │    LiquidAI/LFM2-1.2B-Tool             completion, tools, embed     │
+      │    LiquidAI/LFM2-1.2B-RAG              completion, tools, embed     │
       │    LiquidAI/LFM2.5-1.2B-Thinking       completion, tools, embed     │
       │    LiquidAI/LFM2.5-1.2B-Instruct       completion, tools, embed     │
       │    Qwen/Qwen3-1.7B                     completion, tools, embed     │
@@ -193,8 +197,14 @@ class Cactus < Formula
       │                                                                     │
       │  Speech                                                             │
       │    UsefulSensors/moonshine-base        transcription, embed         │
+      │    openai/whisper-tiny                 transcription, Apple NPU     │
+      │    openai/whisper-base                 transcription, Apple NPU     │
       │    openai/whisper-small                transcription, Apple NPU     │
       │    openai/whisper-medium               transcription, Apple NPU     │
+      │    nvidia/parakeet-ctc-0.6b            transcription, Apple NPU     │
+      │    nvidia/parakeet-ctc-1.1b            transcription, Apple NPU     │
+      │    nvidia/parakeet-tdt-0.6b-v3         transcription, Apple NPU     │
+      │    snakers4/silero-vad                 voice activity detection     │
       │                                                                     │
       │  Embedding                                                          │
       │    nomic-ai/nomic-embed-text-v2-moe    text embedding               │
