@@ -6,6 +6,7 @@ class Cactus < Formula
   revision 1
 
   depends_on "cmake" => :build
+  depends_on "expat"
   depends_on :macos
   depends_on "python@3.14"
   depends_on "sdl2" => :recommended
@@ -68,6 +69,12 @@ class Cactus < Formula
     lib.install cactus_build/"libcactus.dylib"
 
     # ── CLI virtual-environment (heavy deps: torch, transformers, …) ──
+    # Python 3.14's pyexpat links against the system libexpat, which on
+    # macOS Tahoe is too old (missing XML_SetAllocTrackerActivationThreshold).
+    # Point it at Homebrew's expat for both build and runtime.
+    expat_lib = Formula["expat"].opt_lib
+    ENV["DYLD_LIBRARY_PATH"] = expat_lib
+
     venv_dir = libexec/"venv"
     system "python3.14", "-m", "venv", venv_dir
 
@@ -88,6 +95,7 @@ class Cactus < Formula
 
     (bin/"cactus").write <<~EOS
       #!/bin/bash
+      export DYLD_LIBRARY_PATH="#{expat_lib}${DYLD_LIBRARY_PATH:+:$DYLD_LIBRARY_PATH}"
       source "#{venv_dir}/bin/activate"
       exec "#{venv_dir}/bin/cactus" "$@"
     EOS
