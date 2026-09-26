@@ -1,9 +1,9 @@
 class Cactus < Formula
   desc "On-device AI inference"
   homepage "https://cactuscompute.com"
-  url "https://files.pythonhosted.org/packages/4c/e4/a6a3e04454febfa05d174468f946350dda1d62e3cc6404f1cfe72629da6c/cactus_compute-2.2.1.tar.gz"
-  sha256 "487ed69319597d2736ce47447f1d9f0b0fc2ca87d9630215eb0af0d65e5a3613"
-  version "2.2.1"
+  url "https://files.pythonhosted.org/packages/be/76/f4bdb7cb4610f9e901a1f0c695b5c3e40c4a765abfa10ab192a30ba4e9aa/cactus_compute-2.2.2.tar.gz"
+  sha256 "6a4140f07aef491b384293b234c17d788cd505eb743dd076bc546cdea644ea62"
+  version "2.2.2"
   license "Cactus Compute License"
   include Language::Python::Virtualenv
   depends_on "python@3.12"
